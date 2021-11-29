@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/11/29 20:46:08 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/11/30 00:37:28 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ void	*philo_live(void *philo)
 	int				eat_forever;
 
 	phil = ((t_phil_state *) philo);
-	eat_forever = is_eat_forever(phil->num_to_eat);
 	phil->start_t = get_time();
-	while (phil->num_to_eat || eat_forever)
+	while (phil->num_to_eat || phil->eat_forever)
 	{
-		printf("%d %d has taken a fork\n", get_time() - phil->start_t, phil->pos);
-		phil->num_to_eat--;
+		atomic_status_prntr(MESSAGE_TAKE, get_time() - phil->start_t,
+			phil->pos);
+		if (!phil->eat_forever)
+			phil->num_to_eat--;
 	}
 }
 
 void	check_philos(t_phil_state **phils, int n)
 {
 	int	at_least_one;
+	int	;
 	int	c;
 
 	at_least_one = 1;
@@ -40,7 +42,7 @@ void	check_philos(t_phil_state **phils, int n)
 		at_least_one = 0;
 		while(c < n)
 		{
-			if (phils[c]->num_to_eat)
+			if (phils[c]->num_to_eat || phils[c]->eat_forever)
 				at_least_one = 1;
 			c++;
 		}

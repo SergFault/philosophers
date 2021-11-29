@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:31:47 by Sergey            #+#    #+#             */
-/*   Updated: 2021/11/29 20:46:08 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/11/30 00:27:24 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_eat_forever(int num_to_eat)
 {
-	if (!num_to_eat)
+	if (num_to_eat == 0)
 		return (1);
 	return (0);
 }
@@ -32,7 +32,10 @@ static int	init_philos(t_phil_state **phil_st[], int params[])
 		(*phil_st)[c]->time_to_die = params[time_to_die];
 		(*phil_st)[c]->time_to_eat = params[time_to_eat];
 		(*phil_st)[c]->time_to_sleep = params[time_to_sleep];
-		(*phil_st)[c]->num_to_eat = params[num_to_eat];
+		if (params[num_to_eat] == 0)
+			(*phil_st)[c]->eat_forever = 1;
+		else
+			(*phil_st)[c]->num_to_eat = params[num_to_eat];
 		c++;
 	}
 	return (1);
