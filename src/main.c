@@ -6,17 +6,15 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/11/30 00:37:28 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/11/30 01:12:46 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../includes/philosophers.h"
 
 void	*philo_live(void *philo)
 {
 	t_phil_state	*phil;
-	int				eat_forever;
 
 	phil = ((t_phil_state *) philo);
 	phil->start_t = get_time();
@@ -32,7 +30,6 @@ void	*philo_live(void *philo)
 void	check_philos(t_phil_state **phils, int n)
 {
 	int	at_least_one;
-	int	;
 	int	c;
 
 	at_least_one = 1;
@@ -50,20 +47,19 @@ void	check_philos(t_phil_state **phils, int n)
 }
 
 int	main(int argc, char *argv[]){
-	t_tot_state	tot_state;
 	t_phil_state	**phils;
 	int				i;
 
-	if (!init(argc, argv, &tot_state, &phils))
+	if (!init(argc, argv, &phils))
 		return (-1);
 	i = 0;
-	while (i < tot_state.philos_num)
+	while (i < (*phils)[0].phils_total)
 	{
 		pthread_create(&phils[i]->t, NULL, philo_live, phils[i]);
 		pthread_detach(phils[i]->t);
 		i++;
 	}
-	check_philos(phils, tot_state.philos_num);
+	check_philos(phils, (*phils)[0].phils_total);
 	/*while (i < tot_state.philos_num)
 	{
 		printf("Philosopher #%d\n", (phils[i])->pos);
