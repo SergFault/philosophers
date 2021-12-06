@@ -54,5 +54,7 @@ int		init(int argc, char *args[], t_phil_state **phil_st[]);
 int		is_eat_forever(int num_to_eat);
 int		update_status(t_phil_state *p_phil);
 int		get_stamp(t_phil_state *p_phil);
+void	init_stamp(void);
+int		eat(t_phil_state *p_phil);
 
 #endif

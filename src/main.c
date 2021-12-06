@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/11/30 01:12:46 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/06 20:28:34 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	*philo_live(void *philo)
 	phil->start_t = get_time();
 	while (phil->num_to_eat || phil->eat_forever)
 	{
-		atomic_status_prntr(MESSAGE_TAKE, get_time() - phil->start_t,
-			phil->pos);
-		if (!phil->eat_forever)
-			phil->num_to_eat--;
+		eat(phil);
 	}
 }
 
@@ -51,8 +48,9 @@ int	main(int argc, char *argv[]){
 	int				i;
 
 	if (!init(argc, argv, &phils))
-		return (-1);
+		return (1);
 	i = 0;
+	init_stamp();
 	while (i < (*phils)[0].phils_total)
 	{
 		pthread_create(&phils[i]->t, NULL, philo_live, phils[i]);

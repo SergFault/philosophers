@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:31:47 by Sergey            #+#    #+#             */
-/*   Updated: 2021/11/30 01:23:10 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/06 21:23:57 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	is_eat_forever(int num_to_eat)
 {
-	if (num_to_eat == 0)
-		return (1);
-	return (0);
+	return (num_to_eat == 0);
 }
 
 static pthread_mutex_t	*forks_init(int n)
@@ -28,6 +26,7 @@ static pthread_mutex_t	*forks_init(int n)
 	forks = malloc(sizeof(pthread_mutex_t) * n); //todo check alloc
 	while (c < n)
 		pthread_mutex_init(&forks[c++], NULL);
+	return forks;
 }
 
 static int	init_philos(t_phil_state **phil_st[], int params[])
@@ -41,7 +40,7 @@ static int	init_philos(t_phil_state **phil_st[], int params[])
 	while (c < params[num_philo])
 	{
 		(*phil_st)[c] = malloc(sizeof(t_phil_state)); //todo check alloc and free
-		(*phil_st)[0]->phils_total = params[num_philo];
+		(*phil_st)[c]->phils_total = params[num_philo];
 		(*phil_st)[c]->forks = forks;
 		(*phil_st)[c]->pos = c;
 		(*phil_st)[c]->time_to_die = params[time_to_die];
