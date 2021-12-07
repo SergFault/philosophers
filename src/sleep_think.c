@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   sleep.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/29 20:26:26 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/07 17:57:51 by Sergey           ###   ########.fr       */
+/*   Created: 2021/12/07 13:49:36 by Sergey            #+#    #+#             */
+/*   Updated: 2021/12/07 15:12:33 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
-unsigned long	get_time(void)
+void	phil_sleep(t_phil_state *p_phil)
 {
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	atomic_status_prntr(MESSAGE_SLEEP, get_stamp(p_phil), p_phil->pos + 1);
+	usleep(p_phil->time_to_sleep * 1000);
 }
 
-void	init_stamps(t_phil_state *phils[], int total)
+void	think(t_phil_state *p_phil)
 {
-	int				c;
-	unsigned long	start_time;
-
-	start_time = get_time();
-	c = 0;
-	while (c < total) {
-		phils[c]->start_t = start_time;
-		phils[c]->eat_stamp = start_time;
-		c++;
-	}
+	atomic_status_prntr(MESSAGE_THINK, get_stamp(p_phil), p_phil->pos + 1);
 }

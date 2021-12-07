@@ -9,5 +9,6 @@ add_executable(philo src/main.c
         src/utils/print.c
         src/utils/exit.c
         src/eat.c
+        src/sleep_think.c
         src/status_checker.c
         src/init.c)

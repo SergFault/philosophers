@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/06 20:28:34 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/07 18:16:16 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,42 @@ void	*philo_live(void *philo)
 	t_phil_state	*phil;
 
 	phil = ((t_phil_state *) philo);
-	phil->start_t = get_time();
 	while (phil->num_to_eat || phil->eat_forever)
 	{
 		eat(phil);
+		phil_sleep(phil);
+		think(phil);
 	}
+	return NULL;
+}
+
+void	set_all_dead(t_phil_state **phils, int pos)
+{
+	int	c;
+
+	c = 0;
+	while (c < phils[0]->phils_total)
+	{
+		phils[c++]->is_alive = 0;
+	}
+}
+
+int	check_dead(t_phil_state **phils, int pos)
+{
+	static pthread_mutex_t	check_mtx = PTHREAD_MUTEX_INITIALIZER;
+
+	pthread_mutex_lock(&check_mtx);
+	if (get_time() - phils[pos]->eat_stamp >= phils[pos]->time_to_die)
+	{
+		phils[pos]->is_alive = 0;
+		atomic_status_prntr(MESSAGE_DIE, get_time() - phils[pos]->start_t,
+			phils[pos]->pos + 1);
+		printf("stamp last eat: %lu now: %lu diff: %lu\n", phils[pos]->eat_stamp, get_time(), get_time() - phils[pos]->eat_stamp);
+		set_all_dead(phils, pos);
+		return (1);
+	}
+	pthread_mutex_unlock(&check_mtx);
+	return (0);
 }
 
 void	check_philos(t_phil_state **phils, int n)
@@ -30,13 +61,15 @@ void	check_philos(t_phil_state **phils, int n)
 	int	c;
 
 	at_least_one = 1;
-	while(at_least_one)
+	while (at_least_one)
 	{
 		c = 0;
 		at_least_one = 0;
-		while(c < n)
+		while (c < n)
 		{
-			if (phils[c]->num_to_eat || phils[c]->eat_forever)
+			if (check_dead(phils, c))
+				return ;
+			if ((phils[c]->num_to_eat || phils[c]->eat_forever) && (phils[c]->is_alive))
 				at_least_one = 1;
 			c++;
 		}
@@ -48,9 +81,9 @@ int	main(int argc, char *argv[]){
 	int				i;
 
 	if (!init(argc, argv, &phils))
-		return (1);
+		return (-1);
 	i = 0;
-	init_stamp();
+	init_stamps(phils, phils[0]->phils_total);
 	while (i < (*phils)[0].phils_total)
 	{
 		pthread_create(&phils[i]->t, NULL, philo_live, phils[i]);
@@ -58,14 +91,5 @@ int	main(int argc, char *argv[]){
 		i++;
 	}
 	check_philos(phils, (*phils)[0].phils_total);
-	/*while (i < tot_state.philos_num)
-	{
-		printf("Philosopher #%d\n", (phils[i])->pos);
-		printf("time_to_die : %d\n", (phils[i])->time_to_die);
-		printf("time_to_eat : %d\n", (phils[i])->time_to_eat);
-		printf("time_to_sleep : %d\n", (phils[i])->time_to_sleep);
-		printf("num_to_eat : %d\n\n", (phils[i])->num_to_eat);
-		i++;
-	}*/
 	printf("Main returns.\n");
 }
