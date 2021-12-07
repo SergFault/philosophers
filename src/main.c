@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/07 18:16:16 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/07 18:36:53 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ void	set_all_dead(t_phil_state **phils, int pos)
 
 int	check_dead(t_phil_state **phils, int pos)
 {
-	static pthread_mutex_t	check_mtx = PTHREAD_MUTEX_INITIALIZER;
 
-	pthread_mutex_lock(&check_mtx);
+	pthread_mutex_lock(phils[0]->state_mtx);
 	if (get_time() - phils[pos]->eat_stamp >= phils[pos]->time_to_die)
 	{
 		phils[pos]->is_alive = 0;
@@ -51,7 +50,7 @@ int	check_dead(t_phil_state **phils, int pos)
 		set_all_dead(phils, pos);
 		return (1);
 	}
-	pthread_mutex_unlock(&check_mtx);
+	pthread_mutex_unlock(phils[0]->state_mtx);;
 	return (0);
 }
 

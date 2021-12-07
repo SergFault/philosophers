@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:31:47 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/06 21:23:57 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/07 19:19:46 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,21 @@ static int	init_philos(t_phil_state **phil_st[], int params[])
 	return (1);
 }
 
+int	init_state_mtx(t_phil_state *phils[], int c)
+{
+	int					i;
+	pthread_mutex_t		*p_state_mtx;
+
+	i = 0;
+	p_state_mtx = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (!(p_state_mtx))
+		return (0);
+	pthread_mutex_init(p_state_mtx, NULL);
+	while (i < c)
+		phils[i++]->state_mtx = p_state_mtx; //todo malloc
+	return (1);
+}
+
 int	init(int argc, char *argv[], t_phil_state **phil_st[])
 {
 	int	params[NUM_PARAM];
@@ -70,5 +85,6 @@ int	init(int argc, char *argv[], t_phil_state **phil_st[])
 	if (argc == 6)
 		params[num_to_eat] = ft_atoi(argv[5]);
 	init_philos(phil_st, params);
+	init_state_mtx(*phil_st, params[num_philo]);
 	return (1);
 }

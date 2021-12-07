@@ -12,7 +12,7 @@
 
 #include "../../includes/philosophers.h"
 
-void	atomic_status_prntr(char *message, int time_stamp, int phil_num)
+void	atomic_status_prntr(char *message, unsigned long time_stamp, int phil_num)
 {
 	static pthread_mutex_t	print_mutex = PTHREAD_MUTEX_INITIALIZER;
 

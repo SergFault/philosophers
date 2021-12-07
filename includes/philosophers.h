@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/07 17:33:59 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/07 18:43:46 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -43,13 +43,14 @@ typedef struct s_phil_state
 	int				num_to_eat;
 	int				eat_forever;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*state_mtx;
 }				t_phil_state;
 
 /* common utils */
 int				ft_atoi(const char *nptr);
 int				exit_fail(char *err, int status);
 unsigned long	get_time(void);
-void			atomic_status_prntr(char *message, int time_stamp,
+void			atomic_status_prntr(char *message, unsigned long time_stamp,
 					int phil_num);
 /* base methods */
 int				init(int argc, char *args[], t_phil_state **phil_st[]);
