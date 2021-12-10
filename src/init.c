@@ -6,16 +6,11 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:31:47 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/07 19:19:46 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/09 18:26:01 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-int	is_eat_forever(int num_to_eat)
-{
-	return (num_to_eat == 0);
-}
 
 static pthread_mutex_t	*forks_init(int n)
 {
@@ -51,6 +46,7 @@ static int	init_philos(t_phil_state **phil_st[], int params[])
 			(*phil_st)[c]->eat_forever = 1;
 		else
 			(*phil_st)[c]->num_to_eat = params[num_to_eat];
+		(*phil_st)[c]->should_sleep = 0;
 		c++;
 	}
 	return (1);

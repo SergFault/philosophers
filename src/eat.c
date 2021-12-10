@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:49:36 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/07 18:15:26 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/09 19:20:19 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/philosophers.h"
@@ -37,6 +37,8 @@ int	eat(t_phil_state *p_phil)
 {
 	if (p_phil->pos == p_phil->phils_total - 1)
 	{
+		if (p_phil->should_sleep)
+			usleep(p_phil->time_to_eat * 100);
 		lfork(p_phil->forks, p_phil->pos, p_phil->phils_total, 1);
 		rfork(p_phil->forks, p_phil->pos, 1);
 		p_phil->eat_stamp = get_time();
@@ -44,6 +46,7 @@ int	eat(t_phil_state *p_phil)
 		if (p_phil->is_alive)
 			atomic_status_prntr(MESSAGE_EAT, get_stamp(p_phil),
 				p_phil->pos + 1);
+		p_phil->num_to_eat--;
 		pthread_mutex_unlock(p_phil->state_mtx);
 		usleep(p_phil->time_to_eat * 1000);
 		lfork(p_phil->forks, p_phil->pos, p_phil->phils_total, 0);
@@ -51,10 +54,17 @@ int	eat(t_phil_state *p_phil)
 	}
 	else
 	{
+		if (p_phil->should_sleep)
+			usleep(p_phil->time_to_eat * 100);
 		rfork(p_phil->forks, p_phil->pos, 1);
 		lfork(p_phil->forks, p_phil->pos, p_phil->phils_total, 1);
 		p_phil->eat_stamp = get_time();
-		atomic_status_prntr(MESSAGE_EAT, get_stamp(p_phil), p_phil->pos + 1);
+		pthread_mutex_lock(p_phil->state_mtx);
+		if (p_phil->is_alive)
+			atomic_status_prntr(MESSAGE_EAT, get_stamp(p_phil),
+			p_phil->pos + 1);
+		p_phil->num_to_eat--;
+		pthread_mutex_unlock(p_phil->state_mtx);
 		usleep(p_phil->time_to_eat * 1000);
 		rfork(p_phil->forks, p_phil->pos, 0);
 		lfork(p_phil->forks, p_phil->pos, p_phil->phils_total, 0);

@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/07 18:36:53 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/09 19:39:07 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*philo_live(void *philo)
 	while (phil->num_to_eat || phil->eat_forever)
 	{
 		eat(phil);
+		printf("%d num to eat %d\n", phil->pos + 1, phil->num_to_eat);
 		phil_sleep(phil);
 		think(phil);
 	}
@@ -39,7 +40,6 @@ void	set_all_dead(t_phil_state **phils, int pos)
 
 int	check_dead(t_phil_state **phils, int pos)
 {
-
 	pthread_mutex_lock(phils[0]->state_mtx);
 	if (get_time() - phils[pos]->eat_stamp >= phils[pos]->time_to_die)
 	{
@@ -50,7 +50,7 @@ int	check_dead(t_phil_state **phils, int pos)
 		set_all_dead(phils, pos);
 		return (1);
 	}
-	pthread_mutex_unlock(phils[0]->state_mtx);;
+	pthread_mutex_unlock(phils[0]->state_mtx);
 	return (0);
 }
 
@@ -66,17 +66,21 @@ void	check_philos(t_phil_state **phils, int n)
 		at_least_one = 0;
 		while (c < n)
 		{
-			if (check_dead(phils, c))
-				return ;
-			if ((phils[c]->num_to_eat || phils[c]->eat_forever) && (phils[c]->is_alive))
+			if (phils[c]->num_to_eat || phils[c]->eat_forever)
+			{
 				at_least_one = 1;
+				if (check_dead(phils, c))
+					return ;
+			}
 			c++;
 		}
 	}
 }
 
-int	main(int argc, char *argv[]){
+int	main(int argc, char *argv[])
+{
 	t_phil_state	**phils;
+	pthread_t		obs;
 	int				i;
 
 	if (!init(argc, argv, &phils))
@@ -89,6 +93,8 @@ int	main(int argc, char *argv[]){
 		pthread_detach(phils[i]->t);
 		i++;
 	}
+	pthread_create(&obs, NULL, waiter_routine, phils);
+	pthread_detach(obs);
 	check_philos(phils, (*phils)[0].phils_total);
 	printf("Main returns.\n");
 }

@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/07 18:43:46 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/09 18:56:32 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -33,6 +33,7 @@ typedef struct s_phil_state
 {
 	int				phils_total;
 	int				pos;
+	int				should_sleep;
 	unsigned long	start_t;
 	int				is_alive;
 	pthread_t		t;
@@ -54,7 +55,6 @@ void			atomic_status_prntr(char *message, unsigned long time_stamp,
 					int phil_num);
 /* base methods */
 int				init(int argc, char *args[], t_phil_state **phil_st[]);
-int				is_eat_forever(int num_to_eat);
 int				update_status(t_phil_state *p_phil);
 int				get_stamp(t_phil_state *p_phil);
 void			init_stamp(void);
@@ -62,5 +62,6 @@ int				eat(t_phil_state *p_phil);
 void			phil_sleep(t_phil_state *p_phil);
 void			think(t_phil_state *p_phil);
 void			init_stamps(t_phil_state *phils[], int total);
+void			*waiter_routine(void *philos);
 
 #endif
