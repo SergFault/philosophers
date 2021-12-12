@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/09 19:39:07 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/12 14:16:26 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ void	*philo_live(void *philo)
 	t_phil_state	*phil;
 
 	phil = ((t_phil_state *) philo);
+	if (phil->pos % 2)
+		usleep(1000);
 	while (phil->num_to_eat || phil->eat_forever)
 	{
 		eat(phil);
-		printf("%d num to eat %d\n", phil->pos + 1, phil->num_to_eat);
-		phil_sleep(phil);
 		think(phil);
 	}
-	return NULL;
+	return (NULL);
 }
 
-void	set_all_dead(t_phil_state **phils, int pos)
+void	set_all_dead(t_phil_state **phils)
 {
 	int	c;
 
@@ -38,19 +38,25 @@ void	set_all_dead(t_phil_state **phils, int pos)
 	}
 }
 
+int	check_time(t_phil_state *phil)
+{
+	if (get_time() - phil->eat_stamp >= phil->time_to_die)
+		return (0);
+	return (1);
+}
+
 int	check_dead(t_phil_state **phils, int pos)
 {
-	pthread_mutex_lock(phils[0]->state_mtx);
+	pthread_mutex_lock(phils[pos]->state_mtx);
 	if (get_time() - phils[pos]->eat_stamp >= phils[pos]->time_to_die)
 	{
 		phils[pos]->is_alive = 0;
-		atomic_status_prntr(MESSAGE_DIE, get_time() - phils[pos]->start_t,
-			phils[pos]->pos + 1);
-		printf("stamp last eat: %lu now: %lu diff: %lu\n", phils[pos]->eat_stamp, get_time(), get_time() - phils[pos]->eat_stamp);
-		set_all_dead(phils, pos);
+		set_all_dead(phils);
+		atomic_status_prntr(MESSAGE_DIE, phils[pos], phils[pos]->pos + 1);
+		pthread_mutex_unlock(phils[pos]->state_mtx);
 		return (1);
 	}
-	pthread_mutex_unlock(phils[0]->state_mtx);
+	pthread_mutex_unlock(phils[pos]->state_mtx);
 	return (0);
 }
 
@@ -83,7 +89,7 @@ int	main(int argc, char *argv[])
 	pthread_t		obs;
 	int				i;
 
-	if (!init(argc, argv, &phils))
+	if (init(argc, argv, &phils) == -1)
 		return (-1);
 	i = 0;
 	init_stamps(phils, phils[0]->phils_total);
@@ -96,5 +102,5 @@ int	main(int argc, char *argv[])
 	pthread_create(&obs, NULL, waiter_routine, phils);
 	pthread_detach(obs);
 	check_philos(phils, (*phils)[0].phils_total);
-	printf("Main returns.\n");
+	return (0);
 }

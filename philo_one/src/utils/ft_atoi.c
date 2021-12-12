@@ -12,7 +12,7 @@
 
 #include "../../includes/philosophers.h"
 
-static const char *skipspaces(const char *nptr)
+static const char	*skipspaces(const char *nptr)
 {
 	while (*nptr == ' ' || *nptr == '\f' || *nptr == '\n'
 		|| *nptr == '\r' || *nptr == '\t' || *nptr == '\v')
