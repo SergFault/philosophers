@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:31:47 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/12 13:48:07 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/12 18:48:44 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static int	init_philos(t_phil_state **phil_st[], int params[])
 		(*phil_st)[c]->time_to_eat = params[time_to_eat];
 		(*phil_st)[c]->time_to_sleep = params[time_to_sleep];
 		(*phil_st)[c]->is_alive = 1;
+		(*phil_st)[c]->eat_forever = 0;
+		(*phil_st)[c]->num_to_eat = params[num_to_eat];
 		if (params[num_to_eat] == 0)
 			(*phil_st)[c]->eat_forever = 1;
 		else

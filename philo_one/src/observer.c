@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:26:05 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/12 14:22:11 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/12 19:20:35 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	set_sleep(t_phil_state **phil_sts, int hungr)
 		{
 			phil_sts[hungr - 1]->should_sleep = 1;
 		}
-		usleep(phil_sts[0]->time_to_eat * 1000 / 10);
 	}
 }
 
@@ -38,9 +37,10 @@ static int	find_hungry(t_phil_state **ph_st, int *at_least_one)
 	c = 0;
 	max_stamp = 0;
 	*at_least_one = 0;
+	hungry_phil = 0;
 	while (c < ph_st[0]->phils_total)
 	{
-		if (ph_st[c]->eat_forever || ph_st[c]->num_to_eat)
+		if ((ph_st[c]->eat_forever || ph_st[c]->num_to_eat) && ph_st[c]->is_alive)
 		{
 			*at_least_one = 1;
 			if (max_stamp < get_time() - ph_st[c]->eat_stamp)

@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/12 15:39:51 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/12 18:30:44 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -64,5 +64,6 @@ void			think(t_phil_state *p_phil);
 void			init_stamps(t_phil_state *phils[], int total);
 void			*waiter_routine(void *philos);
 int				check_time(t_phil_state *phil);
+void			free_resources(t_phil_state **phils, int n);
 
 #endif

@@ -1,0 +1,108 @@
+==70682== Memcheck, a memory error detector
+==70682== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==70682== Using Valgrind-3.17.0-07f0cdcbb4-20210319X and LibVEX; rerun with -h for copyright info
+==70682== Command: ./philo_one 6 120 60 60
+==70682== Parent PID: 70669
+==70682== 
+--70682-- 
+--70682-- Valgrind options:
+--70682--    --leak-check=full
+--70682--    --show-leak-kinds=all
+--70682--    --track-origins=yes
+--70682--    --verbose
+--70682--    --log-file=valgrind-out.txt
+--70682-- Contents of /proc/version:
+--70682--   Linux version 5.13.0-22-generic (buildd@lgw01-amd64-012) (gcc (Ubuntu 11.2.0-7ubuntu2) 11.2.0, GNU ld (GNU Binutils for Ubuntu) 2.37) #22-Ubuntu SMP Fri Nov 5 13:21:36 UTC 2021
+--70682-- 
+--70682-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
+--70682-- Page sizes: currently 4096, max supported 4096
+--70682-- Valgrind library directory: /usr/libexec/valgrind
+--70682-- Reading syms from /home/sergey/CLionProjects/philosophers/philo_one/philo_one
+--70682-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+--70682--   Considering /usr/lib/debug/.build-id/14/acb10bbdaefc6a64890c96417426ca820c0faa.debug ..
+--70682--   .. build-id is valid
+--70682-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
+--70682--    object doesn't have a symbol table
+--70682--    object doesn't have a dynamic symbol table
+--70682-- Scheduler: using generic scheduler lock implementation.
+--70682-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==70682== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-70682-by-sergey-on-???
+==70682== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-70682-by-sergey-on-???
+==70682== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-70682-by-sergey-on-???
+==70682== 
+==70682== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==70682== don't want to do, unless you know exactly what you're doing,
+==70682== or are doing some strange experiment):
+==70682==   /usr/bin/vgdb --pid=70682 ...command...
+==70682== 
+==70682== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==70682==   /path/to/gdb ./philo_one
+==70682== and then give GDB the following command
+==70682==   target remote | /usr/bin/vgdb --pid=70682
+==70682== --pid is optional if only one valgrind process is running
+==70682== 
+--70682-- REDIR: 0x4028150 (ld-linux-x86-64.so.2:strlen) redirected to 0x580bd4c2 (???)
+--70682-- REDIR: 0x4027f20 (ld-linux-x86-64.so.2:index) redirected to 0x580bd4dc (???)
+--70682-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+--70682--    object doesn't have a symbol table
+--70682-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+--70682--    object doesn't have a symbol table
+==70682== WARNING: new redirection conflicts with existing -- ignoring it
+--70682--     old: 0x04028150 (strlen              ) R-> (0000.0) 0x580bd4c2 ???
+--70682--     new: 0x04028150 (strlen              ) R-> (2007.0) 0x04849d70 strlen
+--70682-- REDIR: 0x4024930 (ld-linux-x86-64.so.2:strcmp) redirected to 0x484ac10 (strcmp)
+--70682-- REDIR: 0x40286b0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x484e780 (mempcpy)
+--70682-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
+--70682--   Considering /usr/lib/debug/.build-id/b8/037b6260865346802321dd2256b8ad1d857e63.debug ..
+--70682--   .. build-id is valid
+--70682-- REDIR: 0x4915d70 (libc.so.6:strnlen) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916030 (libc.so.6:strpbrk) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4915930 (libc.so.6:strcmp) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4933e50 (libc.so.6:wcsnlen) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916ca0 (libc.so.6:memset) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x49326c0 (libc.so.6:wcslen) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x49171e0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x49324f0 (libc.so.6:wcschr) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x49158b0 (libc.so.6:index) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4915fb0 (libc.so.6:rindex) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916b70 (libc.so.6:memmove) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+==70682== Preferring higher priority redirection:
+--70682--     old: 0x04a0cec0 (__memcpy_avx_unalign) R-> (2018.0) 0x0484bed0 __memcpy_avx_unaligned_erms
+--70682--     new: 0x04a0cec0 (__memcpy_avx_unalign) R-> (2018.1) 0x0484d7c0 memmove
+--70682-- REDIR: 0x4932570 (libc.so.6:wcscmp) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916fb0 (libc.so.6:stpncpy) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4932b30 (libc.so.6:wmemchr) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4915e80 (libc.so.6:strncmp) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4917040 (libc.so.6:strcasecmp) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4915a70 (libc.so.6:strcspn) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x49325f0 (libc.so.6:wcscpy) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4915820 (libc.so.6:strcat) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4917130 (libc.so.6:strncasecmp_l) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916ad0 (libc.so.6:bcmp) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x491eb10 (libc.so.6:memrchr) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x49185f0 (libc.so.6:strchrnul) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x49159e0 (libc.so.6:strcpy) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x49170e0 (libc.so.6:strcasecmp_l) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4915cf0 (libc.so.6:strlen) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4915f20 (libc.so.6:strncpy) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916f20 (libc.so.6:stpcpy) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916a40 (libc.so.6:memchr) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916150 (libc.so.6:strspn) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4916da0 (libc.so.6:mempcpy) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4917090 (libc.so.6:strncasecmp) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4918560 (libc.so.6:rawmemchr) redirected to 0x483a1c0 (_vgnU_ifunc_wrapper)
+--70682-- REDIR: 0x4a09d50 (libc.so.6:__strrchr_avx2) redirected to 0x4849750 (rindex)
+--70682-- REDIR: 0x4912990 (libc.so.6:malloc) redirected to 0x48437c0 (malloc)
+--70682-- REDIR: 0x4913c40 (libc.so.6:calloc) redirected to 0x4848970 (calloc)
+--70682-- REDIR: 0x4a09b40 (libc.so.6:__strchrnul_avx2) redirected to 0x484e270 (strchrnul)
+--70682-- REDIR: 0x4a0cea0 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x484e380 (mempcpy)
+--70682-- REDIR: 0x4a09f20 (libc.so.6:__strlen_avx2) redirected to 0x4849c50 (strlen)
+--70682-- REDIR: 0x4912c90 (libc.so.6:free) redirected to 0x48461b0 (free)
+==70682== 
+==70682== HEAP SUMMARY:
+==70682==     in use at exit: 0 bytes in 0 blocks
+==70682==   total heap usage: 17 allocs, 17 frees, 3,880 bytes allocated
+==70682== 
+==70682== All heap blocks were freed -- no leaks are possible
+==70682== 
+==70682== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

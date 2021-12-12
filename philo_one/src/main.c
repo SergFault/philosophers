@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/12 15:56:24 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/12 19:16:47 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,9 @@ int	main(int argc, char *argv[])
 		i++;
 	}
 	pthread_create(&obs, NULL, waiter_routine, phils);
-	pthread_detach(obs);
 	check_philos(phils, (*phils)[0].phils_total);
+	usleep(1000);
+	pthread_join(obs, NULL);
+	free_resources(phils, phils[0]->phils_total);
 	return (0);
 }
