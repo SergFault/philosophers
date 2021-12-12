@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/12 14:16:26 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/12 15:56:24 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ void	*philo_live(void *philo)
 	phil = ((t_phil_state *) philo);
 	if (phil->pos % 2)
 		usleep(1000);
-	while (phil->num_to_eat || phil->eat_forever)
+	while ((phil->num_to_eat || phil->eat_forever) && phil->is_alive)
 	{
 		eat(phil);
 		think(phil);
 	}
+	phil->can_b_free = 1;
 	return (NULL);
 }
 
@@ -60,6 +61,29 @@ int	check_dead(t_phil_state **phils, int pos)
 	return (0);
 }
 
+void	wait_resources(t_phil_state **phils)
+{
+	int	c;
+	int	should_wait;
+
+	c = 0;
+	should_wait = 1;
+	while (should_wait)
+	{
+		should_wait = 0;
+		c = 0;
+		while (c < phils[0]->phils_total)
+		{
+			if (phils[c]->can_b_free == 0)
+				should_wait = 1;
+			c++;
+		}
+		if (should_wait == 0)
+			return ;
+		usleep(1000);
+	}
+}
+
 void	check_philos(t_phil_state **phils, int n)
 {
 	int	at_least_one;
@@ -76,7 +100,10 @@ void	check_philos(t_phil_state **phils, int n)
 			{
 				at_least_one = 1;
 				if (check_dead(phils, c))
+				{
+					wait_resources(phils);
 					return ;
+				}
 			}
 			c++;
 		}

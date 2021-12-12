@@ -9,7 +9,7 @@ SRC_FILES = eat.c init.c main.c observer.c sleep_think.c status_checker.c \
 SRC		= $(addprefix ${SRC_DIR}, ${SRC_FILES})
 OBJ		= ${SRC:.c=.o}
 
-%.o : %.c Makefile ${HDR}
+%.o : %.c ${HDR}
 		$(CC) $(FLAGS) -I$(INCLUDES) -c $< -o $@
 
 all:	$(NAME)
