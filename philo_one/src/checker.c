@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:43:02 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 16:45:14 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/13 16:47:35 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,15 @@ int	check_time(t_phil_state *phil)
 
 static int	check_dead(t_phil_state **phils, int pos)
 {
-	pthread_mutex_lock(phils[pos]->state_mtx);
 	if (get_time() - phils[pos]->eat_stamp >= phils[pos]->time_to_die)
 	{
+		pthread_mutex_lock(phils[pos]->state_mtx);
 		phils[pos]->is_alive = 0;
 		set_all_dead(phils);
 		atomic_status_prntr(MESSAGE_DIE, phils[pos], phils[pos]->pos + 1);
 		pthread_mutex_unlock(phils[pos]->state_mtx);
 		return (1);
 	}
-	pthread_mutex_unlock(phils[pos]->state_mtx);
 	return (0);
 }
 
