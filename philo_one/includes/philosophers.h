@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/12 18:30:44 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/13 14:48:05 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -49,11 +49,11 @@ typedef struct s_phil_state
 }				t_phil_state;
 
 /* common utils */
-int				ft_atoi(const char *nptr);
-int				exit_fail(char *err, int status);
+int				process_fail(char *err, int status);
 unsigned long	get_time(void);
 void			atomic_status_prntr(char *message, t_phil_state *phil,
 					int phil_num);
+int				ft_atoi_err(const char *nptr, int *status);
 /* base methods */
 int				init(int argc, char *args[], t_phil_state **phil_st[]);
 int				update_status(t_phil_state *p_phil);

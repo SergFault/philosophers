@@ -6,14 +6,15 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:46:19 by Sergey            #+#    #+#             */
-/*   Updated: 2021/11/29 18:02:39 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/13 14:08:49 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-int	exit_fail(char *err, int status)
+int	process_fail(char *err, int status)
 {
-	printf("%s\n", err);
+	while (*err)
+		write(2, err++, 1);
 	return (status);
 }

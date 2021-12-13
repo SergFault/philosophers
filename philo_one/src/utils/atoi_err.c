@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   atoi_err.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergey <sergey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 16:23:14 by sergey            #+#    #+#             */
-/*   Updated: 2021/11/29 18:54:08 by Sergey           ###   ########.fr       */
+/*   Created: 2021/12/13 14:26:10 by Sergey            #+#    #+#             */
+/*   Updated: 2021/12/13 14:53:52 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ static const char	*getsign(const char *nptr, int *minuses)
 	return (nptr);
 }
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi_err(const char *nptr, int *status)
 {
 	int				minuses;
 	int				rank;
 	long long int	r;
 
 	r = 0;
+	*status |= 0;
 	rank = 0;
 	minuses = 1;
 	nptr = skipspaces(nptr);
@@ -48,8 +49,8 @@ int	ft_atoi(const char *nptr)
 		rank++;
 		if ((r * minuses) > INT_MAX || (r * minuses) < INT_MIN)
 		{
-			printf("Error\n");
-			exit(1);
+			*status |= 1;
+			return (0);
 		}
 	}
 	return (r * (minuses));

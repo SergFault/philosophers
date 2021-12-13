@@ -116,8 +116,8 @@ int	main(int argc, char *argv[])
 	pthread_t		obs;
 	int				i;
 
-	if (init(argc, argv, &phils) == -1)
-		return (-1);
+	if (init(argc, argv, &phils) == 1)
+		return (1);
 	i = 0;
 	init_stamps(phils, phils[0]->phils_total);
 	while (i < (*phils)[0].phils_total)
