@@ -40,7 +40,8 @@ static int	find_hungry(t_phil_state **ph_st, int *at_least_one)
 	hungry_phil = 0;
 	while (c < ph_st[0]->phils_total)
 	{
-		if ((ph_st[c]->eat_forever || ph_st[c]->num_to_eat) && ph_st[c]->is_alive)
+		if ((ph_st[c]->eat_forever || ph_st[c]->num_to_eat)
+			&& ph_st[c]->is_alive)
 		{
 			*at_least_one = 1;
 			if (max_stamp < get_time() - ph_st[c]->eat_stamp)

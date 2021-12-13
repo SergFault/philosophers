@@ -11,11 +11,6 @@
 /* ************************************************************************** */
 #include "../includes/philosophers.h"
 
-unsigned long	get_stamp(t_phil_state *p_phil)
-{
-	return (get_time() - p_phil->start_t);
-}
-
 static void	rfork(pthread_mutex_t *forks, t_phil_state *p_st, int take)
 {
 	if (take)

@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:26:26 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/07 17:57:51 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/13 16:27:21 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,15 @@ void	init_stamps(t_phil_state *phils[], int total)
 
 	start_time = get_time();
 	c = 0;
-	while (c < total) {
+	while (c < total)
+	{
 		phils[c]->start_t = start_time;
 		phils[c]->eat_stamp = start_time;
 		c++;
 	}
+}
+
+unsigned long	get_stamp(t_phil_state *p_phil)
+{
+	return (get_time() - p_phil->start_t);
 }

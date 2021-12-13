@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 14:48:05 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/13 16:45:14 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -20,6 +20,10 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+# define ERR_MALLOC "Error: allocation memory.\n"
+# define ERR_ARGINT "Error: Args should be integers (Philo number <= 250).\n"
+# define ERR_ARGS "Error: Invalid args.\n"
+# define ERR_THREAD "Error: Thread.\n"
 # define NUM_PARAM 5
 # define MESSAGE_TAKE "has taken a fork"
 # define MESSAGE_EAT "is eating"
@@ -54,6 +58,8 @@ unsigned long	get_time(void);
 void			atomic_status_prntr(char *message, t_phil_state *phil,
 					int phil_num);
 int				ft_atoi_err(const char *nptr, int *status);
+void			*process_fail_npt(char *err);
+int				contains_only_nums(const char *str);
 /* base methods */
 int				init(int argc, char *args[], t_phil_state **phil_st[]);
 int				update_status(t_phil_state *p_phil);
@@ -65,5 +71,9 @@ void			init_stamps(t_phil_state *phils[], int total);
 void			*waiter_routine(void *philos);
 int				check_time(t_phil_state *phil);
 void			free_resources(t_phil_state **phils, int n);
+void			*philo_live(void *philo);
+void			wait_resources(t_phil_state **phils);
+void			check_philos(t_phil_state **phils, int n);
+int				init_philos(t_phil_state **phil_st[], int params[]);
 
 #endif

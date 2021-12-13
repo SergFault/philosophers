@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sleep.c                                            :+:      :+:    :+:   */
+/*   contains_nums.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 13:49:36 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/11 19:04:54 by Sergey           ###   ########.fr       */
+/*   Created: 2021/12/13 16:55:14 by Sergey            #+#    #+#             */
+/*   Updated: 2021/12/13 16:55:14 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../../includes/philosophers.h"
 
-void	think(t_phil_state *p_phil)
+int	contains_only_nums(const char *str)
 {
-	pthread_mutex_lock(p_phil->state_mtx);
-	if ((p_phil->is_alive) && (p_phil->num_to_eat || p_phil->eat_forever)
-		&& check_time(p_phil))
-		atomic_status_prntr(MESSAGE_THINK, p_phil, p_phil->pos + 1);
-	pthread_mutex_unlock(p_phil->state_mtx);
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
 }
