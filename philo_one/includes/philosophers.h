@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 16:45:14 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/13 17:04:22 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -21,7 +21,8 @@
 # include <unistd.h>
 
 # define ERR_MALLOC "Error: allocation memory.\n"
-# define ERR_ARGINT "Error: Args should be integers (Philo number <= 250).\n"
+# define ERR_ARGINT "Error: Args should be integers (Philos \
+number <= 250 and >1).\n"
 # define ERR_ARGS "Error: Invalid args.\n"
 # define ERR_THREAD "Error: Thread.\n"
 # define NUM_PARAM 5

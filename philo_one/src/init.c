@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:31:47 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 17:04:22 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/13 17:09:17 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	get_params(int argc, char *argv[], int params[])
 	params[time_to_sleep] = ft_atoi_err(argv[4], &status);
 	if (argc == 6)
 		params[num_to_eat] = ft_atoi_err(argv[5], &status);
-	if (status || params[num_philo] > 250)
+	if (status || params[num_philo] > 250 || params[num_philo] < 2)
 		return (process_fail(ERR_ARGINT, 1));
 	return (0);
 }

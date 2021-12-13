@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:26:05 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/12 19:20:35 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/13 17:09:17 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	*waiter_routine(void *philos)
 		at_least_one = 0;
 		hungry_phil = find_hungry(phil_sts, &at_least_one);
 		set_sleep(phil_sts, hungry_phil);
+		usleep(5000);
 	}
 	return (NULL);
 }
