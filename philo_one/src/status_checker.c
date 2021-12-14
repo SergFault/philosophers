@@ -9,6 +9,7 @@
 /*   Updated: 2021/11/30 01:33:54 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/philosophers.h"
 
 int	update_status(t_phil_state *p_phil)

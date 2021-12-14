@@ -19,8 +19,11 @@ static int	init_state_mtx(t_phil_state *phils[], int c)
 
 	i = 0;
 	p_state_mtx = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (!p_state_mtx || pthread_mutex_init(p_state_mtx, NULL))
+	if (!p_state_mtx)
+		return (process_fail(ERR_MALLOC, 1));
+	if (pthread_mutex_init(p_state_mtx, NULL))
 	{
+		free(p_state_mtx);
 		phils[0]->state_mtx = NULL;
 		free_resources(phils, phils[0]->phils_total);
 		return (process_fail(ERR_MALLOC, 1));

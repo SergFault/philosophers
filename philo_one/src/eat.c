@@ -69,7 +69,7 @@ static void	put_forks(t_phil_state *p_phil)
 
 int	eat(t_phil_state *p_phil)
 {
-	while (p_phil->should_sleep)
+	while (p_phil->should_sleep && p_phil->is_alive)
 		usleep(1000);
 	take_forks(p_phil);
 	pthread_mutex_lock(p_phil->state_mtx);
