@@ -6,11 +6,38 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:31:47 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 21:57:01 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/14 14:15:16 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+static int	deep_mtx_init(pthread_mutex_t **p_mtxs, t_phil_state *phils[])
+
+{
+	p_mtxs[0] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (!p_mtxs[0])
+		return (process_fail(ERR_MALLOC, 1));
+	if (pthread_mutex_init(p_mtxs[0], NULL))
+	{
+		free(p_mtxs[0]);
+		return (process_fail(ERR_MTX, 1));
+	}
+	p_mtxs[1] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (!p_mtxs[1])
+	{
+		free(p_mtxs[0]);
+		return (process_fail(ERR_MALLOC, 1));
+	}
+	if (pthread_mutex_init(p_mtxs[1], NULL))
+	{
+		free(p_mtxs[0]);
+		free(p_mtxs[1]);
+		return (process_fail(ERR_MTX, 1));
+	}
+	phils[0]->state_mtx = p_mtxs;
+	return (0);
+}
 
 static int	init_state_mtx(t_phil_state *phils[], int c)
 {
@@ -24,22 +51,14 @@ static int	init_state_mtx(t_phil_state *phils[], int c)
 		free_resources(phils, phils[0]->phils_total);
 		return (process_fail(ERR_MALLOC, 1));
 	}
-	p_mtxs[0] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (pthread_mutex_init(p_mtxs[0], NULL))
+	if (deep_mtx_init(p_mtxs, phils))
 	{
-		free_resources(phils, phils[0]->phils_total);
-		return (process_fail(ERR_MALLOC, 1));
-	}
-	p_mtxs[1] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (pthread_mutex_init(p_mtxs[1], NULL))
-	{
+		phils[0]->state_mtx = NULL;
 		free_resources(phils, phils[0]->phils_total);
 		return (process_fail(ERR_MALLOC, 1));
 	}
 	while (i < c)
-	{
 		phils[i++]->state_mtx = p_mtxs;
-	}
 	return (0);
 }
 

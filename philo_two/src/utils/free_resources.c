@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:21:12 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 21:20:59 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/14 14:42:09 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	free_resources(t_phil_state **phils, int n)
 			pthread_mutex_destroy(phils[0]->state_mtx[lock_mtx]);
 			free(phils[0]->state_mtx[lock_mtx]);
 		}
-		sem_close(phils[0]->forks);
+		if (phils[0]->state_mtx)
+			free(phils[0]->state_mtx);
+		if (phils[0]->forks)
+			sem_close(phils[0]->forks);
 		c = 0;
 		while (c < n)
 			free(phils[c++]);

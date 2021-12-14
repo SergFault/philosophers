@@ -27,6 +27,7 @@
 number <= 250 and >1).\n"
 # define ERR_ARGS "Error: Invalid args.\n"
 # define ERR_THREAD "Error: Thread.\n"
+# define ERR_MTX "Error: Mutex.\n"
 # define ERR_SEM "Error: Semaphore.\n"
 # define NUM_PARAM 5
 # define MESSAGE_TAKE "has taken a fork"

@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:54:05 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 22:58:33 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/14 14:49:24 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ static sem_t	*forks_init(int n)
 {
 	sem_t			*forks;
 
-	forks = (sem_t *)malloc(sizeof(sem_t));
-	if (!forks)
-		return (process_fail_npt(ERR_MALLOC));
 	forks = sem_open("forks-sem", O_CREAT | O_EXCL, 0, n);
-	sem_unlink ("forks-sem");
+	sem_unlink("forks-sem");
 	if (forks == SEM_FAILED)
 	{
 		free(forks);
@@ -89,7 +86,10 @@ int	init_philos(t_phil_state **phil_st[], int params[])
 	if (!forks)
 		return (1);
 	if (init_philos_alloc(phil_st, params[num_philo]))
+	{
+		free(forks);
 		return (1);
+	}
 	init_philos_params(params, *phil_st, forks);
 	return (0);
 }
