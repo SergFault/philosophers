@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/14 18:38:24 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/15 15:05:38 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -31,6 +31,7 @@ number <= 250 and >1).\n"
 # define MESSAGE_SLEEP "is sleeping"
 # define MESSAGE_THINK "is thinking"
 # define MESSAGE_DIE "died"
+# define SMALL_SLEEP 40
 
 enum{num_philo, time_to_die, time_to_eat, time_to_sleep, num_to_eat};
 

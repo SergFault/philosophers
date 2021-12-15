@@ -35,6 +35,7 @@ number <= 250 and >1).\n"
 # define MESSAGE_SLEEP "is sleeping"
 # define MESSAGE_THINK "is thinking"
 # define MESSAGE_DIE "died"
+# define SMALL_SLEEP 40
 
 enum{num_philo, time_to_die, time_to_eat, time_to_sleep, num_to_eat};
 enum{state_mtx, lock_mtx};
@@ -66,6 +67,7 @@ void			atomic_status_prntr(char *message, t_phil_state *phil,
 int				ft_atoi_err(const char *nptr, int *status);
 void			*process_fail_npt(char *err);
 int				contains_only_nums(const char *str);
+void			precise_sleep(unsigned long u_sec);
 /* base methods */
 int				init(int argc, char *args[], t_phil_state **phil_st[]);
 int				update_status(t_phil_state *p_phil);

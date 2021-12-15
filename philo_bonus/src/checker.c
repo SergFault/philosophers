@@ -35,7 +35,6 @@ static int	check_dead(t_phil_state **phils, int pos)
 	if (get_time() - phils[pos]->eat_stamp >= phils[pos]->time_to_die)
 	{
 		pthread_mutex_lock(phils[pos]->state_mtx[state_mtx]);
-		phils[pos]->is_alive = 0;
 		set_all_dead(phils);
 		atomic_status_prntr(MESSAGE_DIE, phils[pos], phils[pos]->pos + 1);
 		pthread_mutex_unlock(phils[pos]->state_mtx[state_mtx]);

@@ -34,7 +34,7 @@ static void	put_forks(t_phil_state *p_phil)
 int	eat(t_phil_state *p_phil)
 {
 	while (p_phil->should_sleep && p_phil->is_alive)
-		usleep(1000);
+		precise_sleep(1000);
 	take_forks(p_phil);
 	pthread_mutex_lock(p_phil->state_mtx[state_mtx]);
 	if (p_phil->is_alive)
@@ -44,12 +44,12 @@ int	eat(t_phil_state *p_phil)
 		p_phil->num_to_eat--;
 	}
 	pthread_mutex_unlock(p_phil->state_mtx[state_mtx]);
-	usleep(p_phil->time_to_eat * 1000);
+	precise_sleep(p_phil->time_to_eat * 1000);
 	pthread_mutex_lock(p_phil->state_mtx[state_mtx]);
 	put_forks(p_phil);
 	if ((p_phil->is_alive) && (p_phil->num_to_eat || p_phil->eat_forever))
 		atomic_status_prntr(MESSAGE_SLEEP, p_phil, p_phil->pos + 1);
 	pthread_mutex_unlock(p_phil->state_mtx[state_mtx]);
-	usleep(p_phil->time_to_sleep * 1000);
+	precise_sleep(p_phil->time_to_sleep * 1000);
 	return (1);
 }
