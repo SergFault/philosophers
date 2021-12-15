@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:49:36 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 22:08:32 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/15 16:20:59 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/philosophers.h"
@@ -34,7 +34,7 @@ static void	put_forks(t_phil_state *p_phil)
 int	eat(t_phil_state *p_phil)
 {
 	while (p_phil->should_sleep && p_phil->is_alive)
-		precise_sleep(1000);
+		precise_sleep(500);
 	take_forks(p_phil);
 	pthread_mutex_lock(p_phil->state_mtx[state_mtx]);
 	if (p_phil->is_alive)
