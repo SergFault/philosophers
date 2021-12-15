@@ -61,6 +61,7 @@ void			atomic_status_prntr(char *message, t_phil_state *phil,
 int				ft_atoi_err(const char *nptr, int *status);
 void			*process_fail_npt(char *err);
 int				contains_only_nums(const char *str);
+void			precise_sleep(unsigned long u_sec);
 /* base methods */
 int				init(int argc, char *args[], t_phil_state **phil_st[]);
 int				update_status(t_phil_state *p_phil);

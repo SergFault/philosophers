@@ -27,7 +27,7 @@ void	*philo_live(void *philo)
 
 	phil = ((t_phil_state *) philo);
 	if (phil->pos % 2)
-		usleep(1000);
+		precise_sleep(1000);
 	while ((phil->num_to_eat || phil->eat_forever) && phil->is_alive)
 	{
 		eat(phil);
