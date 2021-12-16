@@ -62,7 +62,7 @@ static int	get_params(int argc, char *argv[], int params[])
 	params[time_to_sleep] = ft_atoi_err(argv[4], &status);
 	if (argc == 6)
 		params[num_to_eat] = ft_atoi_err(argv[5], &status);
-	if (status || params[num_philo] > 250 || params[num_philo] < 2)
+	if (status || params[num_philo] > 250 || params[num_philo] < 1)
 		return (process_fail(ERR_ARGINT, 1));
 	return (0);
 }

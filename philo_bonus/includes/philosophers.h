@@ -24,7 +24,7 @@
 
 # define ERR_MALLOC "Error: allocation memory.\n"
 # define ERR_ARGINT "Error: Args should be integers (Philos \
-number <= 250 and >1).\n"
+number <= 250 and > 0).\n"
 # define ERR_ARGS "Error: Invalid args.\n"
 # define ERR_THREAD "Error: Thread.\n"
 # define ERR_MTX "Error: Mutex.\n"
