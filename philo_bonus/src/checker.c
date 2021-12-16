@@ -32,14 +32,15 @@ int	check_time(t_phil_state *phil)
 
 static int	check_dead(t_phil_state **phils, int pos)
 {
+	pthread_mutex_lock(phils[pos]->state_mtx[state_mtx]);
 	if (get_time() - phils[pos]->eat_stamp >= phils[pos]->time_to_die)
 	{
-		pthread_mutex_lock(phils[pos]->state_mtx[state_mtx]);
 		set_all_dead(phils);
 		atomic_status_prntr(MESSAGE_DIE, phils[pos], phils[pos]->pos + 1);
 		pthread_mutex_unlock(phils[pos]->state_mtx[state_mtx]);
 		return (1);
 	}
+	pthread_mutex_unlock(phils[pos]->state_mtx[state_mtx]);
 	return (0);
 }
 
@@ -66,5 +67,6 @@ void	check_philos(t_phil_state **phils, int n)
 			}
 			c++;
 		}
+		precise_sleep(2000);
 	}
 }

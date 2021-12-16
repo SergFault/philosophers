@@ -69,7 +69,7 @@ void	*waiter_routine(void *philos)
 		at_least_one = 0;
 		hungry_phil = find_hungry(phil_sts, &at_least_one);
 		set_sleep(phil_sts, hungry_phil);
-		precise_sleep(500);
+		precise_sleep(10000);
 	}
 	return (NULL);
 }

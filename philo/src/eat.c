@@ -11,60 +11,26 @@
 /* ************************************************************************** */
 #include "../includes/philosophers.h"
 
-static void	rfork(pthread_mutex_t *forks, t_phil_state *p_st, int take)
-{
-	if (take)
-		pthread_mutex_lock(&forks[p_st->pos]);
-	else
-		pthread_mutex_unlock(&forks[p_st->pos]);
-}
-
-static void	lfork(pthread_mutex_t *forks, int pos, t_phil_state *p_st, int take)
-{
-	if (take)
-		pthread_mutex_lock(&forks[(pos + 1) % p_st->phils_total]);
-	else
-		pthread_mutex_unlock(&forks[(pos + 1) % p_st->phils_total]);
-}
-
 static void	take_forks(t_phil_state *p_phil)
 {
-	if (p_phil->pos == p_phil->phils_total - 1)
-	{
-		lfork(p_phil->forks, p_phil->pos, p_phil, 1);
-		pthread_mutex_lock(p_phil->state_mtx);
-		atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
-		pthread_mutex_unlock(p_phil->state_mtx);
-		rfork(p_phil->forks, p_phil, 1);
-		pthread_mutex_lock(p_phil->state_mtx);
-		atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
-		pthread_mutex_unlock(p_phil->state_mtx);
-	}
-	else
-	{
-		rfork(p_phil->forks, p_phil, 1);
-		pthread_mutex_lock(p_phil->state_mtx);
-		atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
-		pthread_mutex_unlock(p_phil->state_mtx);
-		lfork(p_phil->forks, p_phil->pos, p_phil, 1);
-		pthread_mutex_lock(p_phil->state_mtx);
-		atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
-		pthread_mutex_unlock(p_phil->state_mtx);
-	}
-}
+	int	first_f;
+	int	second_f;
 
-static void	put_forks(t_phil_state *p_phil)
-{
-	if (p_phil->pos == p_phil->phils_total - 1)
+	calculate_fork(p_phil, &first_f, &second_f);
+	take_fork(p_phil->forks, first_f, 1);
+	pthread_mutex_lock(p_phil->state_mtx);
+	atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
+	pthread_mutex_unlock(p_phil->state_mtx);
+	if (p_phil->phils_total == 1)
 	{
-		lfork(p_phil->forks, p_phil->pos, p_phil, 0);
-		rfork(p_phil->forks, p_phil, 0);
+		while (p_phil->is_alive)
+			precise_sleep(p_phil->time_to_eat);
+		return ;
 	}
-	else
-	{
-		rfork(p_phil->forks, p_phil, 0);
-		lfork(p_phil->forks, p_phil->pos, p_phil, 0);
-	}
+	take_fork(p_phil->forks, second_f, 1);
+	pthread_mutex_lock(p_phil->state_mtx);
+	atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
+	pthread_mutex_unlock(p_phil->state_mtx);
 }
 
 int	eat(t_phil_state *p_phil)

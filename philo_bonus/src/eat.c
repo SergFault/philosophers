@@ -18,6 +18,12 @@ static void	take_forks(t_phil_state *p_phil)
 	pthread_mutex_lock(p_phil->state_mtx[state_mtx]);
 	atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
 	pthread_mutex_unlock(p_phil->state_mtx[state_mtx]);
+	if (p_phil->phils_total == 1)
+	{
+		while (p_phil->is_alive)
+			precise_sleep(p_phil->time_to_eat);
+		return ;
+	}
 	sem_wait(p_phil->forks);
 	pthread_mutex_lock(p_phil->state_mtx[state_mtx]);
 	atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);

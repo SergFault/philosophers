@@ -78,5 +78,8 @@ void			*philo_live(void *philo);
 void			wait_resources(t_phil_state **phils);
 void			check_philos(t_phil_state **phils, int n);
 int				init_philos(t_phil_state **phil_st[], int params[]);
+void			calculate_fork(t_phil_state *p_phil, int *first, int *second);
+void			take_fork(pthread_mutex_t *forks, int fork, int take);
+void			put_forks(t_phil_state *p_phil);
 
 #endif
