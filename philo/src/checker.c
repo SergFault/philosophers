@@ -67,6 +67,6 @@ void	check_philos(t_phil_state **phils, int n)
 			}
 			c++;
 		}
-		precise_sleep(1000);
+		precise_sleep(2000);
 	}
 }

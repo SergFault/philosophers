@@ -3,5 +3,5 @@ cmake-build-debug/
 *.o
 *.swp
 valgrind-out.txt
-philo_bonus
-philo
+philo_two
+philo_one

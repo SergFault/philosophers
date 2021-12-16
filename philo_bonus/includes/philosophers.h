@@ -35,7 +35,7 @@ number <= 250 and > 0).\n"
 # define MESSAGE_SLEEP "is sleeping"
 # define MESSAGE_THINK "is thinking"
 # define MESSAGE_DIE "died"
-# define SMALL_SLEEP 40
+# define SMALL_SLEEP 1000
 
 enum{num_philo, time_to_die, time_to_eat, time_to_sleep, num_to_eat};
 enum{state_mtx, lock_mtx};
