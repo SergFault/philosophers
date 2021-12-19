@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:54:05 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 00:44:14 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 00:48:10 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,19 @@ static int	forks_init(int n, sem_t *sems[])
 	sems[1] = sem_open("/state-sem", O_CREAT | O_EXCL, 0, 1);
 	sems[2] = sem_open("/write-sem", O_CREAT | O_EXCL, 0, 1);
 	sems[3] = sem_open("/atomic-sem", O_CREAT | O_EXCL, 0, 1);
-
 	sems[4] = sem_open("/first-sem", O_CREAT | O_EXCL, 0, 1);
 	sems[5] = sem_open("/second-sem", O_CREAT | O_EXCL, 0, 1);
 	sems[6] = sem_open("/third-sem", O_CREAT | O_EXCL, 0, 1);
-
 	sem_unlink("/forks-sem");
 	sem_unlink("/write-sem");
 	sem_unlink("/state-sem");
 	sem_unlink("/atomic-sem");
-
 	sem_unlink("/first-sem");
 	sem_unlink("/second-sem");
 	sem_unlink("/third-sem");
-
 	if (sems[0] == SEM_FAILED || sems[1] == SEM_FAILED || sems[2] == SEM_FAILED
-		|| sems[3] == SEM_FAILED)
+		|| sems[3] == SEM_FAILED || sems[4] == SEM_FAILED
+		|| sems[5] == SEM_FAILED || sems[6] == SEM_FAILED)
 		return (0);
 	return (1);
 }

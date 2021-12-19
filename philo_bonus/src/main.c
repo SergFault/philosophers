@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 00:19:27 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 01:06:29 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	launch_processes(t_phil_state **state)
 		if (state[i]->proc_id == 0)
 			philo_live(state[i]);
 		i++;
-		usleep(100);
+		usleep(50);
 	}
 	wait_processes(state);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:43:02 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 00:13:15 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 01:13:56 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	*check_dead(void *void_phil)
 			exit(1);
 		}
 		sem_post(phil->state_sem);
+		if (phil->num_to_eat <= 0 && phil->eat_forever == 0)
+			break ;
 		usleep(1000);
 	}
 	return (NULL);
