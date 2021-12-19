@@ -6,48 +6,64 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/15 15:34:52 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 00:19:27 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static int	create_philo_threads(t_phil_state	**phils)
+int	wait_processes(t_phil_state **state)
 {
-	int	i;
+	int	c;
+	int	n;
+	int	status;
+
+	n = state[0]->phils_total;
+	c = 0;
+	while (c < n)
+	{
+		waitpid(-1, &status, 0);
+		if (status)
+		{
+			c = 0;
+			while (c < n)
+				kill(state[c++]->proc_id, 15);
+			break ;
+		}
+		c++;
+	}
+	return (1);
+}
+
+int	launch_processes(t_phil_state **state)
+{
+	int				i;
+	unsigned long	init_stamp;
 
 	i = 0;
-	while (i < (*phils)[0].phils_total)
+	init_stamp = get_time();
+	while (i < state[0]->phils_total)
+		state[i++]->start_t = init_stamp;
+	i = 0;
+	while (i < state[0]->phils_total)
 	{
-		if (pthread_create(&phils[i]->t, NULL, philo_live, phils[i])
-			|| pthread_detach(phils[i]->t))
-		{
-			free_resources(phils, phils[0]->phils_total);
-			return (process_fail(ERR_THREAD, 1));
-		}
+		state[i]->proc_id = fork();
+		if (state[i]->proc_id == 0)
+			philo_live(state[i]);
 		i++;
+		usleep(100);
 	}
+	wait_processes(state);
 	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_phil_state	**phils;
-	pthread_t		obs;
 
 	if (init(argc, argv, &phils))
 		return (1);
 	init_stamps(phils, phils[0]->phils_total);
-	if (create_philo_threads(phils))
-		return (1);
-	if (pthread_create(&obs, NULL, waiter_routine, phils))
-	{
-		free_resources(phils, phils[0]->phils_total);
-		return (process_fail(ERR_THREAD, 1));
-	}
-	check_philos(phils, (*phils)[0].phils_total);
-	usleep(1000);
-	pthread_join(obs, NULL);
-	free_resources(phils, phils[0]->phils_total);
+	launch_processes(phils);
 	return (0);
 }

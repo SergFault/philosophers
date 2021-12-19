@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 21:57:01 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 00:44:14 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <semaphore.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 
 # define ERR_MALLOC "Error: allocation memory.\n"
 # define ERR_ARGINT "Error: Args should be integers (Philos \
@@ -44,7 +45,7 @@ typedef struct s_phil_state
 {
 	int				phils_total;
 	int				pos;
-	int				should_sleep;
+	int				proc_id;
 	unsigned long	start_t;
 	int				is_alive;
 	unsigned long	time_to_die;
@@ -54,9 +55,13 @@ typedef struct s_phil_state
 	int				num_to_eat;
 	int				eat_forever;
 	pthread_t		t;
+	sem_t			*firts_line;
+	sem_t			*second_line;
+	sem_t			*third_line;
+	sem_t			*atomic_sem;
+	sem_t			*write_sem;
 	sem_t			*forks;
-	pthread_mutex_t	**state_mtx;
-	int				can_b_free;
+	sem_t			*state_sem;
 }				t_phil_state;
 
 /* common utils */
@@ -83,5 +88,5 @@ void			*philo_live(void *philo);
 void			wait_resources(t_phil_state **phils);
 void			check_philos(t_phil_state **phils, int n);
 int				init_philos(t_phil_state **phil_st[], int params[]);
-
+void			*check_dead(void *void_phil);
 #endif

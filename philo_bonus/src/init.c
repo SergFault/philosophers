@@ -12,56 +12,6 @@
 
 #include "../includes/philosophers.h"
 
-static int	deep_mtx_init(pthread_mutex_t **p_mtxs, t_phil_state *phils[])
-
-{
-	p_mtxs[0] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (!p_mtxs[0])
-		return (process_fail(ERR_MALLOC, 1));
-	if (pthread_mutex_init(p_mtxs[0], NULL))
-	{
-		free(p_mtxs[0]);
-		return (process_fail(ERR_MTX, 1));
-	}
-	p_mtxs[1] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (!p_mtxs[1])
-	{
-		free(p_mtxs[0]);
-		return (process_fail(ERR_MALLOC, 1));
-	}
-	if (pthread_mutex_init(p_mtxs[1], NULL))
-	{
-		free(p_mtxs[0]);
-		free(p_mtxs[1]);
-		return (process_fail(ERR_MTX, 1));
-	}
-	phils[0]->state_mtx = p_mtxs;
-	return (0);
-}
-
-static int	init_state_mtx(t_phil_state *phils[], int c)
-{
-	int					i;
-	pthread_mutex_t		**p_mtxs;
-
-	i = 0;
-	p_mtxs = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * 2);
-	if (!p_mtxs)
-	{
-		free_resources(phils, phils[0]->phils_total);
-		return (process_fail(ERR_MALLOC, 1));
-	}
-	if (deep_mtx_init(p_mtxs, phils))
-	{
-		phils[0]->state_mtx = NULL;
-		free_resources(phils, phils[0]->phils_total);
-		return (process_fail(ERR_MALLOC, 1));
-	}
-	while (i < c)
-		phils[i++]->state_mtx = p_mtxs;
-	return (0);
-}
-
 static int	validate_args(int argc, char *argv[])
 {
 	int	c;
@@ -105,8 +55,6 @@ int	init(int argc, char *argv[], t_phil_state **phil_st[])
 	if (get_params(argc, argv, params))
 		return (1);
 	if (init_philos(phil_st, params))
-		return (1);
-	if (init_state_mtx(*phil_st, params[num_philo]))
 		return (1);
 	return (0);
 }

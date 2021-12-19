@@ -6,22 +6,11 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:43:02 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 16:47:35 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 00:13:15 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-static void	set_all_dead(t_phil_state **phils)
-{
-	int	c;
-
-	c = 0;
-	while (c < phils[0]->phils_total)
-	{
-		phils[c++]->is_alive = 0;
-	}
-}
 
 int	check_time(t_phil_state *phil)
 {
@@ -30,43 +19,23 @@ int	check_time(t_phil_state *phil)
 	return (1);
 }
 
-static int	check_dead(t_phil_state **phils, int pos)
+void	*check_dead(void *void_phil)
 {
-	pthread_mutex_lock(phils[pos]->state_mtx[state_mtx]);
-	if (get_time() - phils[pos]->eat_stamp >= phils[pos]->time_to_die)
-	{
-		set_all_dead(phils);
-		atomic_status_prntr(MESSAGE_DIE, phils[pos], phils[pos]->pos + 1);
-		pthread_mutex_unlock(phils[pos]->state_mtx[state_mtx]);
-		return (1);
-	}
-	pthread_mutex_unlock(phils[pos]->state_mtx[state_mtx]);
-	return (0);
-}
+	t_phil_state	*phil;
 
-void	check_philos(t_phil_state **phils, int n)
-{
-	int	at_least_one;
-	int	c;
-
-	at_least_one = 1;
-	while (at_least_one)
+	phil = (t_phil_state *)void_phil;
+	while (1)
 	{
-		c = 0;
-		at_least_one = 0;
-		while (c < n)
+		sem_wait(phil->state_sem);
+		if (get_time() - phil->eat_stamp >= phil->time_to_die)
 		{
-			if (phils[c]->num_to_eat || phils[c]->eat_forever)
-			{
-				at_least_one = 1;
-				if (check_dead(phils, c))
-				{
-					wait_resources(phils);
-					return ;
-				}
-			}
-			c++;
+			atomic_status_prntr(MESSAGE_DIE, phil, phil->pos + 1);
+			phil->is_alive = 0;
+			sem_wait(phil->write_sem);
+			exit(1);
 		}
-		precise_sleep(2000);
+		sem_post(phil->state_sem);
+		usleep(1000);
 	}
+	return (NULL);
 }

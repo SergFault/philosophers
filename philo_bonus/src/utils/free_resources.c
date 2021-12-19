@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:21:12 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/14 14:42:09 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/19 15:11:20 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,46 +19,11 @@ void	free_resources(t_phil_state **phils, int n)
 	c = 0;
 	if (phils)
 	{
-		if (*phils && phils[0]->state_mtx[state_mtx])
-		{
-			pthread_mutex_destroy(phils[0]->state_mtx[state_mtx]);
-			free(phils[0]->state_mtx[state_mtx]);
-		}
-		if (*phils && phils[0]->state_mtx[lock_mtx])
-		{
-			pthread_mutex_destroy(phils[0]->state_mtx[lock_mtx]);
-			free(phils[0]->state_mtx[lock_mtx]);
-		}
-		if (phils[0]->state_mtx)
-			free(phils[0]->state_mtx);
 		if (phils[0]->forks)
 			sem_close(phils[0]->forks);
 		c = 0;
 		while (c < n)
 			free(phils[c++]);
 		free(phils);
-	}
-}
-
-void	wait_resources(t_phil_state **phils)
-{
-	int	c;
-	int	should_wait;
-
-	c = 0;
-	should_wait = 1;
-	while (should_wait)
-	{
-		should_wait = 0;
-		c = 0;
-		while (c < phils[0]->phils_total)
-		{
-			if (phils[c]->can_b_free == 0)
-				should_wait = 1;
-			c++;
-		}
-		if (should_wait == 0)
-			return ;
-		usleep(1000);
 	}
 }
