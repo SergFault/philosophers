@@ -5,3 +5,4 @@ cmake-build-debug/
 valgrind-out.txt
 philo_two
 philo_one
+philo

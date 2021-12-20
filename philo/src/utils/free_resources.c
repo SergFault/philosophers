@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:21:12 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 23:36:58 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 23:37:01 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,26 @@ void	free_resources(t_phil_state **phils, int n)
 	int	c;
 
 	c = 0;
-	if (phils)
+	pthread_mutex_destroy(phils[0]->state_mtx);
+	pthread_mutex_destroy(phils[0]->write);
+	pthread_mutex_destroy(phils[0]->line1);
+	pthread_mutex_destroy(phils[0]->line2);
+	pthread_mutex_destroy(phils[0]->line3);
+	free(phils[0]->state_mtx);
+	free(phils[0]->write);
+	free(phils[0]->line1);
+	free(phils[0]->line2);
+	free(phils[0]->line3);
+	while (c < n)
 	{
-		pthread_mutex_destroy(phils[0]->state_mtx);
-		pthread_mutex_destroy(phils[0]->write);
-		pthread_mutex_destroy(phils[0]->line1);
-		pthread_mutex_destroy(phils[0]->line2);
-		pthread_mutex_destroy(phils[0]->line3);
-		free(phils[0]->state_mtx);
-		free(phils[0]->write);
-		free(phils[0]->line1);
-		free(phils[0]->line2);
-		free(phils[0]->line3);
-		while (c < n)
-		{
-			pthread_mutex_destroy(&(phils[0]->forks[c]));
-			c++;
-		}
-		free(phils[0]->forks);
-		c = 0;
-		while (c < n)
-			free(phils[c++]);
-		free(phils);
+		pthread_mutex_destroy(&(phils[0]->forks[c]));
+		c++;
 	}
+	free(phils[0]->forks);
+	c = 0;
+	while (c < n)
+		free(phils[c++]);
+	free(phils);
 }
 
 int	free_back(void *ptr[], int n)

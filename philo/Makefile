@@ -4,7 +4,7 @@ FLAGS		= -Wextra -Wall -Werror -g
 INCLUDES 	= includes/
 HDR			= ${INCLUDES}philosophers.h
 SRC_DIR		= src/
-SRC_FILES 	= eat.c init.c main.c think_live.c init_1.c \
+SRC_FILES 	= eat.c init.c main.c think_live.c init_1.c init_2.c \
 			forks_utils.c\
 			utils/exit.c utils/atoi_err.c utils/print.c utils/time.c \
 			utils/free_resources.c utils/atoi_err.c checker.c \

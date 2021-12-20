@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 23:36:58 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 23:37:01 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -88,4 +88,8 @@ void			free_forks(pthread_mutex_t *forks, int n);
 int				free_back(void *ptr[], int n);
 void			free_extra_mtxs(pthread_mutex_t *mtxs[], int n);
 void			atomic_status_prntr_dead(t_phil_state *phil, int phil_num);
+int				init_extra_mtx(pthread_mutex_t *extra_mtxs[]);
+void			init_extra_mtxs(pthread_mutex_t	*extra[],
+					t_phil_state **phil_st, int c);
+pthread_mutex_t	*forks_init(int n);
 #endif

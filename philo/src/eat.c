@@ -12,7 +12,7 @@
 
 #include "../includes/philosophers.h"
 
-int	think_sleep(t_phil_state *p_phil)
+static int	think_sleep(t_phil_state *p_phil)
 {
 	atomic_status_prntr(MESSAGE_SLEEP, p_phil, p_phil->pos + 1);
 	precise_sleep(p_phil->time_to_sleep * 1000);
@@ -25,6 +25,18 @@ int	think_sleep(t_phil_state *p_phil)
 	precise_sleep(1000);
 	pthread_mutex_unlock(p_phil->line3);
 	return (1);
+}
+
+static int	is_enough(t_phil_state *p_phil)
+{
+	if (p_phil->num_to_eat <= 0 && p_phil->eat_forever == 0)
+	{
+		pthread_mutex_unlock(p_phil->state_mtx);
+		pthread_mutex_unlock(p_phil->l_fork);
+		pthread_mutex_unlock(p_phil->r_fork);
+		return (1);
+	}
+	return (0);
 }
 
 int	eat(t_phil_state *p_phil)
@@ -45,13 +57,8 @@ int	eat(t_phil_state *p_phil)
 		p_phil->eat_stamp = get_time();
 		atomic_status_prntr(MESSAGE_EAT, p_phil, p_phil->pos + 1);
 		p_phil->num_to_eat--;
-		if (p_phil->num_to_eat <= 0 && p_phil->eat_forever == 0)
-		{
-			pthread_mutex_unlock(p_phil->state_mtx);
-			pthread_mutex_unlock(p_phil->l_fork);
-			pthread_mutex_unlock(p_phil->r_fork);
+		if (is_enough(p_phil))
 			return (0);
-		}
 	}
 	pthread_mutex_unlock(p_phil->state_mtx);
 	precise_sleep(p_phil->time_to_eat * 1000);
