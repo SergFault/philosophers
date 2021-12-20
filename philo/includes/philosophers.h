@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 23:37:01 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 23:58:44 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -72,18 +72,14 @@ void			precise_sleep(unsigned long u_sec);
 /* base methods */
 int				init(int argc, char *args[], t_phil_state **phil_st[]);
 unsigned long	get_stamp(t_phil_state *p_phil);
-void			init_stamp(void);
 int				eat(t_phil_state *p_phil);
-void			think(t_phil_state *p_phil);
 void			init_stamps(t_phil_state *phils[], int total);
-int				check_time(t_phil_state *phil);
 void			free_resources(t_phil_state **phils, int n);
 void			*philo_live(void *philo);
 void			wait_resources(t_phil_state **phils);
 void			check_philos(t_phil_state **phils, int n);
 int				init_philos(t_phil_state **phil_st[], int params[]);
 void			calculate_fork(t_phil_state *p_phil, int *first, int *second);
-void			take_fork(pthread_mutex_t *forks, int fork, int take);
 void			free_forks(pthread_mutex_t *forks, int n);
 int				free_back(void *ptr[], int n);
 void			free_extra_mtxs(pthread_mutex_t *mtxs[], int n);
