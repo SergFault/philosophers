@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:21:12 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 17:04:02 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 23:11:35 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ void	free_resources(t_phil_state **phils, int n)
 	c = 0;
 	if (phils)
 	{
-		if (*phils && phils[0]->state_mtx)
-		{
-			pthread_mutex_destroy(phils[0]->state_mtx);
-			free(phils[0]->state_mtx);
-		}
+		pthread_mutex_destroy(phils[0]->state_mtx);
+		pthread_mutex_destroy(phils[0]->write);
+		pthread_mutex_destroy(phils[0]->line1);
+		pthread_mutex_destroy(phils[0]->line2);
+		pthread_mutex_destroy(phils[0]->line3);
+		free(phils[0]->state_mtx);
+		free(phils[0]->write);
+		free(phils[0]->line1);
+		free(phils[0]->line2);
+		free(phils[0]->line3);
 		while (c < n)
 		{
 			pthread_mutex_destroy(&(phils[0]->forks[c]));

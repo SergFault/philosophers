@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:54:05 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 17:32:48 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 18:11:46 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static void	init_philos_params(int *params, t_phil_state **phil_st,
 		init_extra_mtxs(extra, phil_st, c);
 		phil_st[c]->is_alive = 1;
 		phil_st[c]->eat_forever = 0;
+		phil_st[c]->num_to_eat = 0;
 		if (params[num_to_eat] == 0)
 			phil_st[c]->eat_forever = 1;
 		else

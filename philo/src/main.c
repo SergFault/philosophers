@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 18:24:52 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 19:08:02 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	create_philo_threads(t_phil_state	**phils)
 			free_resources(phils, phils[0]->phils_total);
 			return (process_fail(ERR_THREAD, 1));
 		}
-		usleep(10);
 		i++;
 	}
 	return (0);

@@ -87,4 +87,5 @@ void			take_fork(pthread_mutex_t *forks, int fork, int take);
 void			free_forks(pthread_mutex_t *forks, int n);
 int				free_back(void *ptr[], int n);
 void			free_extra_mtxs(pthread_mutex_t *mtxs[], int n);
+void			atomic_status_prntr_dead(t_phil_state *phil, int phil_num);
 #endif
