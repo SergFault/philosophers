@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 16:20:15 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 16:22:15 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -28,6 +28,7 @@
 number <= 250 and > 0).\n"
 # define ERR_ARGS "Error: Invalid args.\n"
 # define ERR_PROC "Error: Process fork failed.\n"
+# define ERR_THREAD "Error: Thread failed.\n"
 # define ERR_SEM "Error: Semaphore.\n"
 # define NUM_PARAM 5
 # define MESSAGE_TAKE "has taken a fork"

@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:49:36 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 16:19:42 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 16:24:07 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	philo_live(void *philo)
 	phil = ((t_phil_state *) philo);
 	if (phil->pos % 2)
 		precise_sleep(500);
-	pthread_create(&phil->t, NULL, check_dead, philo);
+	if (pthread_create(&phil->t, NULL, check_dead, philo) != 0)
+		return (2);
 	while ((phil->num_to_eat || phil->eat_forever) && phil->is_alive)
 	{
 		eat(phil);
@@ -34,11 +35,7 @@ static int	philo_live(void *philo)
 		sem_post(phil->state_sem);
 	}
 	pthread_join(phil->t, NULL);
-	if (!phil->is_alive)
-	{
-		return (1);
-	}
-	return (0);
+	return (!phil->is_alive);
 }
 
 int	philo_start(int n, t_phil_state **state)
@@ -47,5 +44,7 @@ int	philo_start(int n, t_phil_state **state)
 
 	status = philo_live(state[n]);
 	free_resources(state);
+	if (status == 2)
+		exit(process_fail(ERR_THREAD, 1));
 	exit(status);
 }
