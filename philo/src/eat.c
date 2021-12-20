@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:49:36 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 18:23:49 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 18:34:47 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/philosophers.h"
@@ -21,6 +21,12 @@ int	eat(t_phil_state *p_phil)
 	pthread_mutex_unlock(p_phil->line3);
 	pthread_mutex_lock(p_phil->l_fork);
 	atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
+	if (p_phil->phils_total == 1)
+	{
+		while (p_phil[0].is_alive)
+			usleep(1000);
+		return (0);
+	}
 	pthread_mutex_lock(p_phil->r_fork);
 	atomic_status_prntr(MESSAGE_TAKE, p_phil, p_phil->pos + 1);
 	pthread_mutex_lock(p_phil->state_mtx);

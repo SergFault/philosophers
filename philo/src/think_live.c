@@ -30,7 +30,8 @@ void	*philo_live(void *philo)
 		precise_sleep(1000);
 	while ((phil->num_to_eat || phil->eat_forever) && phil->is_alive)
 	{
-		eat(phil);
+		if (eat(phil) == 0)
+			break ;
 		think(phil);
 	}
 	phil->can_b_free = 1;
