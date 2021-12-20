@@ -73,12 +73,9 @@ static void	init_philos_params(const int *params, t_phil_state **phil_st,
 		phil_st[c]->state_sem = sems[1];
 		phil_st[c]->write_sem = sems[2];
 		phil_st[c]->atomic_sem = sems[3];
-
 		phil_st[c]->firts_line = sems[4];
 		phil_st[c]->second_line = sems[5];
 		phil_st[c]->third_line = sems[6];
-
-
 		phil_st[c]->pos = c;
 		phil_st[c]->time_to_die = params[time_to_die];
 		phil_st[c]->time_to_eat = params[time_to_eat];

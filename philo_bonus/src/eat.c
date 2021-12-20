@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:49:36 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 00:56:31 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 14:46:22 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/philosophers.h"
@@ -17,6 +17,7 @@ int	eat(t_phil_state *p_phil)
 	sem_wait(p_phil->second_line);
 	sem_post(p_phil->firts_line);
 	sem_wait(p_phil->third_line);
+	usleep(100);
 	sem_post(p_phil->second_line);
 	sem_wait(p_phil->atomic_sem);
 	sem_post(p_phil->third_line);
