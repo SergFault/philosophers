@@ -6,13 +6,13 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:49:36 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 04:17:50 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 16:19:42 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	*philo_live(void *philo)
+static int	philo_live(void *philo)
 {
 	t_phil_state	*phil;
 
@@ -32,12 +32,20 @@ void	*philo_live(void *philo)
 		sem_wait(phil->state_sem);
 		atomic_status_prntr(MESSAGE_THINK, phil, phil->pos + 1);
 		sem_post(phil->state_sem);
-//		precise_sleep(phil->time_to_eat * 1000);
 	}
 	pthread_join(phil->t, NULL);
 	if (!phil->is_alive)
 	{
-		exit(1);
+		return (1);
 	}
-	exit(0);
+	return (0);
+}
+
+int	philo_start(int n, t_phil_state **state)
+{
+	int	status;
+
+	status = philo_live(state[n]);
+	free_resources(state);
+	exit(status);
 }

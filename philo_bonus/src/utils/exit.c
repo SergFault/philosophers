@@ -12,13 +12,6 @@
 
 #include "../../includes/philosophers.h"
 
-void	*process_fail_npt(char *err)
-{
-	while (*err)
-		write(2, err++, 1);
-	return (NULL);
-}
-
 int	process_fail(char *err, int status)
 {
 	while (*err)

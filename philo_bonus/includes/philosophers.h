@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:36:56 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 00:44:14 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 16:20:15 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILOSOPHERS_H
@@ -27,8 +27,7 @@
 # define ERR_ARGINT "Error: Args should be integers (Philos \
 number <= 250 and > 0).\n"
 # define ERR_ARGS "Error: Invalid args.\n"
-# define ERR_THREAD "Error: Thread.\n"
-# define ERR_MTX "Error: Mutex.\n"
+# define ERR_PROC "Error: Process fork failed.\n"
 # define ERR_SEM "Error: Semaphore.\n"
 # define NUM_PARAM 5
 # define MESSAGE_TAKE "has taken a fork"
@@ -69,23 +68,16 @@ unsigned long	get_time(void);
 void			atomic_status_prntr(char *message, t_phil_state *phil,
 					int phil_num);
 int				ft_atoi_err(const char *nptr, int *status);
-void			*process_fail_npt(char *err);
 int				contains_only_nums(const char *str);
 void			precise_sleep(unsigned long u_sec);
 /* base methods */
 int				init(int argc, char *args[], t_phil_state **phil_st[]);
-int				update_status(t_phil_state *p_phil);
 unsigned long	get_stamp(t_phil_state *p_phil);
-void			init_stamp(void);
 int				eat(t_phil_state *p_phil);
-void			think(t_phil_state *p_phil);
-void			init_stamps(t_phil_state *phils[], int total);
-void			*waiter_routine(void *philos);
-int				check_time(t_phil_state *phil);
-void			free_resources(t_phil_state **phils, int n);
-void			*philo_live(void *philo);
+void			free_resources(t_phil_state **phils);
 void			wait_resources(t_phil_state **phils);
-void			check_philos(t_phil_state **phils, int n);
 int				init_philos(t_phil_state **phil_st[], int params[]);
 void			*check_dead(void *void_phil);
+int				forks_init(int n, sem_t *sems[]);
+int				philo_start(int n, t_phil_state **state);
 #endif

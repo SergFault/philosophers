@@ -12,13 +12,6 @@
 
 #include "../includes/philosophers.h"
 
-int	check_time(t_phil_state *phil)
-{
-	if (get_time() - phil->eat_stamp >= phil->time_to_die)
-		return (0);
-	return (1);
-}
-
 void	*check_dead(void *void_phil)
 {
 	t_phil_state	*phil;

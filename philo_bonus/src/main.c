@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:29:09 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/20 01:13:56 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 16:13:33 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ int	wait_processes(t_phil_state **state)
 	return (1);
 }
 
+static int	ft_kill(int n, t_phil_state **phils)
+{
+	while (--n >= 0)
+		kill(phils[n]->proc_id, 15);
+	return (process_fail(ERR_PROC, 1));
+}
+
 int	launch_processes(t_phil_state **state)
 {
 	int				i;
@@ -43,13 +50,18 @@ int	launch_processes(t_phil_state **state)
 	i = 0;
 	init_stamp = get_time();
 	while (i < state[0]->phils_total)
-		state[i++]->start_t = init_stamp;
+	{
+		state[i]->start_t = init_stamp;
+		state[i++]->eat_stamp = init_stamp;
+	}
 	i = 0;
 	while (i < state[0]->phils_total)
 	{
 		state[i]->proc_id = fork();
+		if (state[i]->proc_id == -1)
+			return (ft_kill(i, state));
 		if (state[i]->proc_id == 0)
-			philo_live(state[i]);
+			philo_start(i, state);
 		i++;
 		usleep(200);
 	}
@@ -63,7 +75,11 @@ int	main(int argc, char *argv[])
 
 	if (init(argc, argv, &phils))
 		return (1);
-	init_stamps(phils, phils[0]->phils_total);
-	launch_processes(phils);
+	if (launch_processes(phils))
+	{
+		free_resources(phils);
+		return (1);
+	}
+	free_resources(phils);
 	return (0);
 }
