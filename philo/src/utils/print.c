@@ -29,10 +29,8 @@ static int	is_die_message(const char *message)
 
 void	atomic_status_prntr(char *message, t_phil_state *phil, int phil_num)
 {
-	static pthread_mutex_t	print_mutex = PTHREAD_MUTEX_INITIALIZER;
-
-	pthread_mutex_lock(&print_mutex);
+	pthread_mutex_lock(phil->write);
 	if ((phil->is_alive && check_time(phil)) || is_die_message(message))
 		printf("%lu %d %s\n", get_stamp(phil), phil_num, message);
-	pthread_mutex_unlock(&print_mutex);
+	pthread_mutex_unlock(phil->write);
 }

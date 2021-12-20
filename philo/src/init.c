@@ -43,9 +43,7 @@ static int	validate_args(int argc, char *argv[])
 	while (c < argc)
 	{
 		if (!contains_only_nums(argv[c++]))
-		{
 			return (process_fail(ERR_ARGINT, 1));
-		}
 	}
 	return (0);
 }

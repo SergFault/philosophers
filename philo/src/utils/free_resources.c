@@ -6,7 +6,7 @@
 /*   By: Sergey <mrserjy@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:21:12 by Sergey            #+#    #+#             */
-/*   Updated: 2021/12/13 16:08:32 by Sergey           ###   ########.fr       */
+/*   Updated: 2021/12/20 17:04:02 by Sergey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,32 @@ void	free_resources(t_phil_state **phils, int n)
 			free(phils[c++]);
 		free(phils);
 	}
+}
+
+int	free_back(void *ptr[], int n)
+{
+	while (n >= 0)
+		free(ptr[n--]);
+	return (1);
+}
+
+void	free_forks(pthread_mutex_t *forks, int n)
+{
+	int	c;
+
+	c = 0;
+	while (c < n)
+		pthread_mutex_destroy(&forks[c++]);
+	free(forks);
+}
+
+void	free_extra_mtxs(pthread_mutex_t *mtxs[], int n)
+{
+	int	c;
+
+	c = 0;
+	while (c < n)
+		pthread_mutex_destroy(mtxs[c++]);
 }
 
 void	wait_resources(t_phil_state **phils)
