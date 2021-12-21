@@ -22,7 +22,7 @@ static int	think_sleep(t_phil_state *p_phil)
 	pthread_mutex_unlock(p_phil->line1);
 	pthread_mutex_lock(p_phil->line3);
 	pthread_mutex_unlock(p_phil->line2);
-	precise_sleep(1000);
+	usleep(40);
 	pthread_mutex_unlock(p_phil->line3);
 	return (1);
 }
