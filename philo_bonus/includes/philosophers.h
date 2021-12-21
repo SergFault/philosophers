@@ -22,6 +22,9 @@
 # include <semaphore.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # define ERR_MALLOC "Error: allocation memory.\n"
 # define ERR_ARGINT "Error: Args should be integers (Philos \
