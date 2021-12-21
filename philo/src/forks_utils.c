@@ -13,6 +13,6 @@
 
 void	calculate_fork(t_phil_state *p_phil, int *first, int *second)
 {
-		*first = p_phil->pos;
-		*second = (p_phil->pos + 1) % p_phil->phils_total;
+	*first = p_phil->pos;
+	*second = (p_phil->pos + 1) % p_phil->phils_total;
 }
