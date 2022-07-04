@@ -8,7 +8,7 @@ synchronization issues and techniques for resolving them.
 **philo:** multithreading with mutex  
 **philo_bonus:** multiprocessing with semaphore
 
-![Game visual](./assets/philo.gif)
+![Game visual](./philo.gif)
 
 ### Rules
 - One or more philosophers sit at a round table.
